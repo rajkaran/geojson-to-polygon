@@ -4,8 +4,8 @@ from shapely.geometry import Polygon, MultiPolygon
 from shapely import wkt
 
 # Specify the path to your JSON file
-file_path = 'Municipal_Boundary_Ontario_left_over_9.json'  # Replace with your actual file path
-output_csv_path = 'results/Municipal_Boundary_Ontario_residual_9.csv'  # Specify the output CSV file name
+file_path = 'calibre/haldimand.json'  # Replace with your actual file path
+output_csv_path = 'calibre-dist/haldimand.csv'  # Specify the output CSV file name
 # file_path = 'pastedv3.json'  # Replace with your actual file path
 # output_csv_path = 'results/pasted.csv'  # Specify the output CSV file name
 

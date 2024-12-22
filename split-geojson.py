@@ -7,7 +7,7 @@ def read_municipality_list(file_path):
     return municipality_list
 
 # Function to split the large GeoJSON into smaller chunks
-def split_geojson(input_file, output_prefix, municipality_list, chunk_size=50):
+def split_geojson(input_file, output_prefix, municipality_list, fieldName, chunk_size=50):
     # Load the entire GeoJSON file
     with open(input_file, 'r') as f:
         data = json.load(f)
@@ -23,7 +23,7 @@ def split_geojson(input_file, output_prefix, municipality_list, chunk_size=50):
     # Filter features based on the municipality_name list
     filtered_features = []
     for feature in features:
-        municipality_name = feature['properties'].get('MUNICIPAL_NAME', 'Unnamed')
+        municipality_name = feature['properties'].get(fieldName, 'Unnamed')
         if municipality_name in municipality_list:
             filtered_features.append(feature)
 
@@ -48,12 +48,15 @@ def split_geojson(input_file, output_prefix, municipality_list, chunk_size=50):
         print(f'Saved {output_file}')
 
 # Specify the input GeoJSON file path, the municipality list file, and output prefix for the chunk files
-input_geojson = 'Municipal_Boundary_Ontario.geojson'  # Replace with your actual GeoJSON file path
-municipality_list_file = 'sgh_municipality_list.txt'  # Replace with your actual text file path
-output_prefix = 'Municipal_Boundary_Ontario_small'    # Output file prefix
+input_geojson = 'source/Municipal_Boundary_Ontario.geojson'  # Replace with your actual GeoJSON file path
+# municipality_list_file = 'sgh_municipality_list.txt'  # Replace with your actual text file path
+municipality_list_file = 'calibre_county_list.txt'  # Replace with your actual text file path
+output_prefix = 'County_Boundary_Ontario_small'    # Output file prefix
+fieldName = 'MUNICIPAL_NAME'
+# fieldName = 'UPPER_TIER_MUNICIPALITY'
 
 # Read the municipality list from the file
 municipality_list = read_municipality_list(municipality_list_file)
 
 # Call the function to filter and split the GeoJSON file into chunks of 50 records
-split_geojson(input_geojson, output_prefix, municipality_list, chunk_size=10)
+split_geojson(input_geojson, output_prefix, municipality_list, fieldName, chunk_size=10)
